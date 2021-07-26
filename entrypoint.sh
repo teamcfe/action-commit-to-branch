@@ -38,4 +38,8 @@ fi
 git stash pop
 git add .
 git commit -m "${INPUT_COMMIT_MESSAGE}"
-git push --set-upstream origin "${INPUT_BRANCH}"
+if [[ "${MERGE_BRANCH}" ]]; then
+  git push --set-upstream origin "${INPUT_BRANCH}" --force
+else
+  git push --set-upstream origin "${INPUT_BRANCH}"
+fi
