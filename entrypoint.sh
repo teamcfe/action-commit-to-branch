@@ -28,6 +28,10 @@ else
    git checkout -b "${INPUT_BRANCH}"
 fi
 
+if [[ "${MERGE_BRANCH}" ]]; then
+   git merge "${MERGE_BRANCH}" --allow-unrelated-histories --squash 
+fi
+
 git stash pop
 git add .
 git commit -m "${INPUT_COMMIT_MESSAGE}"
