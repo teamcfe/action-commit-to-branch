@@ -29,7 +29,10 @@ else
 fi
 
 if [[ "${MERGE_BRANCH}" ]]; then
-   git merge "${MERGE_BRANCH}" --allow-unrelated-histories --squash 
+   git checkout "${MERGE_BRANCH"}
+   git branch -D "${INPUT_BRANCH}"
+   git checkout -b "${INPUT_BRANCH}"
+   # git merge "${MERGE_BRANCH}" --allow-unrelated-histories --squash 
 fi
 
 git stash pop
