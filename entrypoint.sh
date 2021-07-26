@@ -28,17 +28,18 @@ else
    git checkout -b "${INPUT_BRANCH}"
 fi
 
-if [[ "${MERGE_BRANCH}" ]]; then
-   git checkout "${MERGE_BRANCH}"
+# Will overwrite INPUT_BRANCH with SOURCE_BRANCH
+if [[ "${SOURCE_BRANCH}" ]]; then
+   git checkout "${SOURCE_BRANCH}"
    git branch -D "${INPUT_BRANCH}"
    git checkout -b "${INPUT_BRANCH}"
-   # git merge "${MERGE_BRANCH}" --allow-unrelated-histories --squash 
 fi
 
 git stash pop
 git add .
 git commit -m "${INPUT_COMMIT_MESSAGE}"
-if [[ "${MERGE_BRANCH}" ]]; then
+if [[ "${SOURCE_BRANCH}" ]]; then
+  # Assumes SOURCE_BRANCH on origin has conflicts; thus force.
   git push --set-upstream origin "${INPUT_BRANCH}" --force
 else
   git push --set-upstream origin "${INPUT_BRANCH}"
